@@ -55,20 +55,20 @@ func fill(erase: bool) -> void:
 	
 	var idx: int = get_index()
 	
-	var left_pixel: TextureButton = null
+	var left_pixel: Control = null
 	if idx % global.width != global.width - 1:
 		left_pixel = canvas.get_child(idx + 1)
 	
-	var right_pixel: TextureButton = null
+	var right_pixel: Control = null
 	if idx % global.width != 0:
 		right_pixel = canvas.get_child(idx - 1)
 	
-	var up_pixel: TextureButton = null
+	var up_pixel: Control = null
 # warning-ignore:integer_division
 	if idx / global.hight != global.hight - 1:
 		up_pixel = canvas.get_child(idx + global.width)
 	
-	var down_pixel: TextureButton = null
+	var down_pixel: Control = null
 # warning-ignore:integer_division
 	if idx / global.hight != 0:
 		down_pixel = canvas.get_child(idx - global.width)

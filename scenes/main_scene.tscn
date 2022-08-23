@@ -17,7 +17,6 @@ mouse_filter = 1
 margin_left = 611.0
 margin_right = 1041.0
 margin_bottom = 600.0
-mouse_filter = 1
 color = Color( 0.117647, 0.109804, 0.184314, 1 )
 __meta__ = {
 "_edit_lock_": true
@@ -25,10 +24,10 @@ __meta__ = {
 
 [node name="ColorPicker" type="ColorPicker" parent="right_side"]
 pause_mode = 1
-margin_left = 704.0
-margin_top = 81.0
-margin_right = 1019.0
-margin_bottom = 543.0
+margin_left = 708.0
+margin_top = 85.0
+margin_right = 1023.0
+margin_bottom = 547.0
 hsv_mode = true
 __meta__ = {
 "_edit_lock_": true
