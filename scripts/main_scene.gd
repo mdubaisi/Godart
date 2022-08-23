@@ -57,6 +57,9 @@ func _process(_delta: float) -> void:
 			global.pixels_idx -= 1
 			set_pixels()
 	
+	elif Input.is_action_pressed("ctrl"):
+		color_picker_icon.pressed = true
+	
 	
 	if Input.is_action_just_pressed("b"):
 		canvas.cur_tool = canvas.BRUSH

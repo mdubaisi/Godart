@@ -12,6 +12,8 @@ export(Vector2) var max_zoom: Vector2 = Vector2(5, 5)
 export(Vector2) var zoom_start_point: Vector2
 export(Vector2) var zoom_end_point: Vector2
 export(Vector2) var zoom_speed: Vector2 = Vector2(0.01, 0.01)
+export(Vector2) var canvas_frame_start: Vector2
+export(Vector2) var canvas_frame_end: Vector2
 export(float, 0.01, 0.1) var pan_speed: float = 0.02
 var panning: bool = false
 

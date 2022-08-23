@@ -5,6 +5,8 @@ const HOVER = preload("res://assets/pixel_frame_hover.png")
 
 onready var root: Control = global.get_root(self)
 onready var canvas: GridContainer = get_parent()
+onready var canvas_frame_s: Vector2 = canvas.canvas_frame_start
+onready var canvas_frame_e: Vector2 = canvas.canvas_frame_end
 
 var can_fill: bool = true
 var cur_tool: String
@@ -15,32 +17,40 @@ var y: int
 func _process(_delta: float) -> void:
 	cur_tool = canvas.cur_tool
 	
-	var mouse_pos: Vector2 = get_local_mouse_position()
-	if mouse_pos.x > 0 and mouse_pos.x <= global.PIXEL_LEN and \
-	mouse_pos.y > 0 and mouse_pos.y <= global.PIXEL_LEN and \
-	!root.color_picker_icon.pressed:
+	var lmouse_pos: Vector2 = get_local_mouse_position()
+	var gmouse_pos: Vector2 = get_global_mouse_position()
+	
+	if lmouse_pos.x > 0 and lmouse_pos.x <= global.PIXEL_LEN and \
+	lmouse_pos.y > 0 and lmouse_pos.y <= global.PIXEL_LEN and \
+	gmouse_pos.x >= canvas_frame_s.x and gmouse_pos.x <= canvas_frame_e.x and\
+	gmouse_pos.y >= canvas_frame_s.y and gmouse_pos.y <= canvas_frame_e.y:
 		$frame.texture = HOVER
 		
-		if cur_tool == canvas.FILL:
-			if Input.is_action_just_pressed("right_mouse"):
-				fill(true)
+		if !root.color_picker_icon.pressed:
 			
-			elif Input.is_action_just_pressed("left_mouse"):
-				fill(false)
+			if cur_tool == canvas.FILL:
+				if Input.is_action_just_pressed("right_mouse"):
+					fill(true)
 				
-			for pixel in canvas.get_children():
-				pixel.can_fill = true
-		
-		elif cur_tool == canvas.BRUSH:
-			if Input.is_action_pressed("right_mouse"):
-				$pixel.modulate = Color(1, 1, 1, 0)
+				elif Input.is_action_just_pressed("left_mouse"):
+					fill(false)
+					
+				for pixel in canvas.get_children():
+					pixel.can_fill = true
 			
-			elif Input.is_action_pressed("left_mouse"):
-				$pixel.modulate = canvas.color_picker.color
-			
-		if Input.is_action_just_released("right_mouse") or \
-		 Input.is_action_just_released("left_mouse"):
-			canvas.root.save_pixels()
+			elif cur_tool == canvas.BRUSH:
+				if Input.is_action_pressed("right_mouse"):
+					$pixel.modulate = Color(1, 1, 1, 0)
+				
+				elif Input.is_action_pressed("left_mouse"):
+					$pixel.modulate = canvas.color_picker.color
+				
+			if Input.is_action_just_released("right_mouse") or \
+			 Input.is_action_just_released("left_mouse"):
+				canvas.root.save_pixels()
+		else:
+			if Input.is_action_just_pressed("left_mouse"):
+					canvas.color_picker.color = $pixel.modulate
 	
 	else:
 		$frame.texture = FRAME
