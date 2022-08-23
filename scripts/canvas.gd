@@ -42,17 +42,17 @@ func in_boundery() -> bool:
 
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_released("middle_mouse"):
-			panning = false
+		panning = false
 	
 	if event is InputEventMouseButton and in_boundery():
 		if event.button_index == BUTTON_WHEEL_DOWN and camera.zoom > min_zoom:
 			camera.zoom += zoom_speed
 		elif event.button_index == BUTTON_WHEEL_UP and camera.zoom < max_zoom:
 			camera.zoom -= zoom_speed
-	elif event is InputEventMouseMotion:
-		if Input.is_action_pressed("middle_mouse") and (panning or in_boundery()):
-			panning = true
-			camera.position += event.speed * pan_speed * -1
+	elif event is InputEventMouseMotion and \
+	Input.is_action_pressed("middle_mouse") and (panning or in_boundery()):
+		panning = true
+		camera.position += event.speed * pan_speed * -1
 
 func transform(matrix: Array) -> void:
 	var new_canvas: Array = []

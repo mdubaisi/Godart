@@ -18,8 +18,7 @@ func get_root(cur: Node) -> Node:
 	else:
 		return get_root(cur.get_parent())
 
-func find_child_of_type(node: Node, type) -> Node: # used only if guaranteed there's only 
-													# one child of type "type"
+func find_child_of_type(node: Node, type) -> Node: # used only if guaranteed there's only one child of type "type"
 	for child in node.get_children():
 		if child is type:
 			return child

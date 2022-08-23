@@ -9,6 +9,8 @@ onready var color_picker_icon: ToolButton
 onready var save_dialog: FileDialog = $save_dialog
 onready var export_dialog: FileDialog = $export_dialog
 
+var no_popups_visible: bool = true
+
 signal vars_ready
 
 func _ready() -> void:
@@ -46,27 +48,27 @@ func _ready() -> void:
 	save_pixels()
 
 func _process(_delta: float) -> void:
-	if Input.is_action_pressed("ctrl") and Input.is_action_pressed("shift")\
-	 and Input.is_action_just_released("z"):
-		if global.pixels_idx < len(global.pixels_history) - 1:
-			global.pixels_idx += 1
-			set_pixels()
+	if no_popups_visible:
+		if Input.is_action_pressed("ctrl") and Input.is_action_pressed("shift") \
+		 and Input.is_action_just_released("z"):
+			if global.pixels_idx < len(global.pixels_history) - 1:
+				global.pixels_idx += 1
+				set_pixels()
 
-	elif Input.is_action_pressed("ctrl") and Input.is_action_just_released("z"):
-		if global.pixels_idx > 0:
-			global.pixels_idx -= 1
-			set_pixels()
+		elif Input.is_action_pressed("ctrl") and \
+		Input.is_action_just_released("z"):
+			if global.pixels_idx > 0:
+				global.pixels_idx -= 1
+				set_pixels()
+		
+		else:
+			color_picker_icon.pressed = Input.is_action_pressed("ctrl")
 	
-	else:
-		color_picker_icon.pressed = Input.is_action_pressed("ctrl")
-	
-	
-	
-	if Input.is_action_just_pressed("b"):
-		canvas.cur_tool = canvas.BRUSH
-	
-	if Input.is_action_just_pressed("f"):
-		canvas.cur_tool = canvas.FILL
+		if Input.is_action_just_pressed("b"):
+			canvas.cur_tool = canvas.BRUSH
+		
+		if Input.is_action_just_pressed("f"):
+			canvas.cur_tool = canvas.FILL
 
 func save_pixels() -> void:
 	var pixels: Array = []
@@ -85,9 +87,11 @@ func set_pixels() -> void:
 
 func _on_save_pressed() -> void:
 	save_dialog.popup()
+	no_popups_visible = false
 
 func _on_export_pressed() -> void:
 	export_dialog.popup()
+	no_popups_visible = false
 
 func _on_save_dialog_file_selected(path: String) -> void:
 	global.file_path = path
@@ -108,6 +112,7 @@ func _on_save_dialog_file_selected(path: String) -> void:
 	file.close()
 	
 	yield(get_tree().create_timer(0.15), "timeout")
+	no_popups_visible = true
 	get_tree().paused = false
 
 func _on_export_dialog_file_selected(path: String) -> void:
@@ -127,4 +132,5 @@ func _on_export_dialog_file_selected(path: String) -> void:
 	img.save_png(global.image_path)
 	
 	yield(get_tree().create_timer(0.15), "timeout")
+	no_popups_visible = true
 	get_tree().paused = false
