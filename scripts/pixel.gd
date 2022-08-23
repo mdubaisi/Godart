@@ -18,11 +18,11 @@ func _process(_delta: float) -> void:
 	cur_tool = canvas.cur_tool
 	
 	var lmouse_pos: Vector2 = get_local_mouse_position()
-	var gmouse_pos: Vector2 = get_global_mouse_position()
+	var gmouse_pos: Vector2 = root.get_global_mouse_position()
 	
 	if lmouse_pos.x > 0 and lmouse_pos.x <= global.PIXEL_LEN and \
 	lmouse_pos.y > 0 and lmouse_pos.y <= global.PIXEL_LEN and \
-	gmouse_pos.x >= canvas_frame_s.x and gmouse_pos.x <= canvas_frame_e.x and\
+	gmouse_pos.x >= canvas_frame_s.x and gmouse_pos.x <= canvas_frame_e.x and \
 	gmouse_pos.y >= canvas_frame_s.y and gmouse_pos.y <= canvas_frame_e.y:
 		$frame.texture = HOVER
 		
