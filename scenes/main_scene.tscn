@@ -28,6 +28,7 @@ margin_left = 693.0
 margin_top = 17.0
 margin_right = 1008.0
 margin_bottom = 479.0
+edit_alpha = false
 hsv_mode = true
 __meta__ = {
 "_edit_lock_": true

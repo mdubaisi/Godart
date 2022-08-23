@@ -49,7 +49,8 @@ func _process(_delta: float) -> void:
 			 Input.is_action_just_released("left_mouse"):
 				canvas.root.save_pixels()
 		else:
-			if Input.is_action_just_pressed("left_mouse"):
+			if Input.is_action_just_pressed("left_mouse") and \
+			$pixel.modulate != Color(1, 1, 1, 0):
 					canvas.color_picker.color = $pixel.modulate
 	
 	else:

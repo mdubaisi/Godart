@@ -57,8 +57,9 @@ func _process(_delta: float) -> void:
 			global.pixels_idx -= 1
 			set_pixels()
 	
-	elif Input.is_action_pressed("ctrl"):
-		color_picker_icon.pressed = true
+	else:
+		color_picker_icon.pressed = Input.is_action_pressed("ctrl")
+	
 	
 	
 	if Input.is_action_just_pressed("b"):
