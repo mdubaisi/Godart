@@ -1,14 +1,16 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://scripts/main_scene.gd" type="Script" id=1]
 [ext_resource path="res://assets/brush_icon.png" type="Texture" id=2]
 [ext_resource path="res://assets/fill_icon.png" type="Texture" id=3]
 [ext_resource path="res://scenes/tool_button.tscn" type="PackedScene" id=4]
 [ext_resource path="res://scenes/canvas.tscn" type="PackedScene" id=5]
+[ext_resource path="res://assets/pixel_frame_hover.png" type="Texture" id=6]
 
 [node name="main_scene" type="Control"]
 pause_mode = 2
 script = ExtResource( 1 )
+ui_bg = Color( 0.231373, 0.231373, 0.231373, 1 )
 
 [node name="right_side" type="Control" parent="."]
 mouse_filter = 1
@@ -22,16 +24,29 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="ColorPicker" type="ColorPicker" parent="right_side"]
-pause_mode = 1
-margin_left = 700.0
-margin_top = 78.0
-margin_right = 1015.0
-margin_bottom = 540.0
-hsv_mode = true
+[node name="eyedrop" type="ColorRect" parent="right_side"]
+margin_left = 636.0
+margin_top = 204.0
+margin_right = 686.0
+margin_bottom = 254.0
+color = Color( 0.117647, 0.109804, 0.184314, 1 )
 __meta__ = {
 "_edit_lock_": true
 }
+
+[node name="TextureRect" type="TextureRect" parent="right_side/eyedrop"]
+margin_right = 50.0
+margin_bottom = 50.0
+texture = ExtResource( 6 )
+expand = true
+
+[node name="ColorPicker" type="ColorPicker" parent="right_side"]
+pause_mode = 1
+margin_left = 700.0
+margin_top = 40.0
+margin_right = 1015.0
+margin_bottom = 502.0
+hsv_mode = true
 
 [node name="save" type="Button" parent="right_side"]
 pause_mode = 1

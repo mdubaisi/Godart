@@ -27,7 +27,7 @@ func _process(_delta: float) -> void:
 	gmouse_pos.y >= canvas_frame_s.y and gmouse_pos.y <= canvas_frame_e.y:
 		$frame.texture = HOVER
 		
-		if !root.color_picker_icon.pressed:
+		if !root.color_picking:
 			
 			if cur_tool == canvas.FILL:
 				if Input.is_action_just_pressed("right_mouse"):
@@ -51,8 +51,9 @@ func _process(_delta: float) -> void:
 				canvas.root.save_pixels()
 		else:
 			if Input.is_action_just_pressed("left_mouse") and \
-			$pixel.modulate != Color(1, 1, 1, 0):
+			$pixel.modulate.a != 0:
 					canvas.color_picker.color = $pixel.modulate
+					root.color_picking = false
 	
 	else:
 		$frame.texture = FRAME

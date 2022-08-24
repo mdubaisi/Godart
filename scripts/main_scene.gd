@@ -5,18 +5,18 @@ export(Color) var ui_bg: Color = Color("1e1c2f")
 onready var tool_container: VBoxContainer = $tool_bar/tool_container
 onready var canvas: GridContainer = $ViewportContainer/middle/canvas
 onready var color_picker: ColorPicker = $right_side/ColorPicker
-onready var color_picker_icon: ToolButton
 onready var save_dialog: FileDialog = $save_dialog
 onready var export_dialog: FileDialog = $export_dialog
 
 var no_popups_visible: bool = true
+var color_picking: bool = false
 
 signal vars_ready
 
 func _ready() -> void:
 	$right_side/ColorRect.color = ui_bg
 	$tool_bar/ColorRect.color = ui_bg
-	color_picker_icon = global.find_child_of_type(color_picker, ToolButton)
+	global.find_child_of_type(color_picker, ToolButton).queue_free()
 	emit_signal("vars_ready")
 	
 	if global.pixels != "":
@@ -48,6 +48,8 @@ func _ready() -> void:
 	save_pixels()
 
 func _process(_delta: float) -> void:
+	$right_side/eyedrop.color = $right_side/ColorPicker.color
+	
 	if no_popups_visible:
 		if Input.is_action_pressed("ctrl") and Input.is_action_pressed("shift") \
 		 and Input.is_action_just_released("z"):
@@ -61,8 +63,10 @@ func _process(_delta: float) -> void:
 				global.pixels_idx -= 1
 				set_pixels()
 		
-		else:
-			color_picker_icon.pressed = Input.is_action_pressed("ctrl")
+		elif Input.is_action_pressed("ctrl"):
+			color_picking = true
+		elif Input.is_action_just_released("ctrl"):
+			color_picking = false
 	
 		if Input.is_action_just_pressed("b"):
 			canvas.cur_tool = canvas.BRUSH

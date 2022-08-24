@@ -43,7 +43,7 @@ func in_boundery() -> bool:
 func _input(event: InputEvent) -> void:
 	if Input.is_action_just_released("middle_mouse"):
 		panning = false
-	
+
 	if event is InputEventMouseButton and in_boundery():
 		if event.button_index == BUTTON_WHEEL_DOWN and camera.zoom > min_zoom:
 			camera.zoom += zoom_speed
