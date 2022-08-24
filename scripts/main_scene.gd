@@ -5,8 +5,8 @@ export(Color) var ui_bg: Color = Color("1e1c2f")
 onready var tool_container: VBoxContainer = $tool_bar/tool_container
 onready var canvas: GridContainer = $ViewportContainer/middle/canvas
 onready var color_picker: ColorPicker = $right_side/ColorPicker
-onready var save_dialog: FileDialog = $save_dialog
-onready var export_dialog: FileDialog = $export_dialog
+onready var save_dialog: FileDialog = $popups/save_dialog
+onready var export_dialog: FileDialog = $popups/export_dialog
 
 var no_popups_visible: bool = true
 var color_picking: bool = false
@@ -48,7 +48,7 @@ func _ready() -> void:
 	save_pixels()
 
 func _process(_delta: float) -> void:
-	$right_side/eyedrop.color = $right_side/ColorPicker.color
+	$right_side/eyedrop.color = color_picker.color
 	
 	if no_popups_visible:
 		if Input.is_action_pressed("ctrl") and Input.is_action_pressed("shift") \
@@ -91,11 +91,9 @@ func set_pixels() -> void:
 
 func _on_save_pressed() -> void:
 	save_dialog.popup()
-	no_popups_visible = false
 
 func _on_export_pressed() -> void:
 	export_dialog.popup()
-	no_popups_visible = false
 
 func _on_save_dialog_file_selected(path: String) -> void:
 	global.file_path = path
@@ -116,7 +114,6 @@ func _on_save_dialog_file_selected(path: String) -> void:
 	file.close()
 	
 	yield(get_tree().create_timer(0.15), "timeout")
-	no_popups_visible = true
 	get_tree().paused = false
 
 func _on_export_dialog_file_selected(path: String) -> void:
@@ -136,5 +133,10 @@ func _on_export_dialog_file_selected(path: String) -> void:
 	img.save_png(global.image_path)
 	
 	yield(get_tree().create_timer(0.15), "timeout")
-	no_popups_visible = true
 	get_tree().paused = false
+
+func _on_save_dialog_visibility_changed() -> void:
+	no_popups_visible = !save_dialog.visible
+
+func _on_export_dialog_visibility_changed() -> void:
+	no_popups_visible = !export_dialog.visible

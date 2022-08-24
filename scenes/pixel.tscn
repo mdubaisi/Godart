@@ -7,7 +7,7 @@
 [node name="pixel" type="Control"]
 margin_right = 40.0
 margin_bottom = 40.0
-mouse_filter = 1
+mouse_filter = 2
 script = ExtResource( 3 )
 
 [node name="pixel" type="TextureRect" parent="."]
@@ -20,4 +20,5 @@ texture = ExtResource( 2 )
 [node name="frame" type="TextureRect" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
 texture = ExtResource( 1 )

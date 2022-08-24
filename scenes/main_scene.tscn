@@ -12,8 +12,7 @@ pause_mode = 2
 script = ExtResource( 1 )
 ui_bg = Color( 0.231373, 0.231373, 0.231373, 1 )
 
-[node name="right_side" type="Control" parent="."]
-mouse_filter = 1
+[node name="right_side" type="Node" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="right_side"]
 margin_left = 620.0
@@ -42,10 +41,10 @@ expand = true
 
 [node name="ColorPicker" type="ColorPicker" parent="right_side"]
 pause_mode = 1
-margin_left = 700.0
-margin_top = 40.0
-margin_right = 1015.0
-margin_bottom = 502.0
+margin_left = 720.0
+margin_top = 60.0
+margin_right = 1035.0
+margin_bottom = 522.0
 hsv_mode = true
 
 [node name="save" type="Button" parent="right_side"]
@@ -87,9 +86,7 @@ zoom_end_point = Vector2( 652, 600 )
 canvas_frame_start = Vector2( 32, 0 )
 canvas_frame_end = Vector2( 620, 600 )
 
-[node name="tool_bar" type="Control" parent="."]
-margin_right = 40.0
-margin_bottom = 40.0
+[node name="tool_bar" type="Node" parent="."]
 
 [node name="ColorRect" type="ColorRect" parent="tool_bar"]
 margin_right = 32.0
@@ -111,23 +108,29 @@ margin_top = 36.0
 margin_bottom = 68.0
 texture_normal = ExtResource( 3 )
 
-[node name="save_dialog" type="FileDialog" parent="." groups=["popups"]]
+[node name="popups" type="Node" parent="."]
+
+[node name="save_dialog" type="FileDialog" parent="popups"]
 margin_left = 253.0
 margin_top = 129.0
 margin_right = 690.0
 margin_bottom = 384.0
 rect_min_size = Vector2( 250, 87.5 )
+window_title = "Save file"
 access = 2
 
-[node name="export_dialog" type="FileDialog" parent="." groups=["popups"]]
+[node name="export_dialog" type="FileDialog" parent="popups"]
 margin_left = 253.0
 margin_top = 129.0
 margin_right = 690.0
 margin_bottom = 384.0
 rect_min_size = Vector2( 250, 87.5 )
+window_title = "Export image"
 access = 2
 
 [connection signal="pressed" from="right_side/save" to="." method="_on_save_pressed"]
 [connection signal="pressed" from="right_side/export" to="." method="_on_export_pressed"]
-[connection signal="file_selected" from="save_dialog" to="." method="_on_save_dialog_file_selected"]
-[connection signal="file_selected" from="export_dialog" to="." method="_on_export_dialog_file_selected"]
+[connection signal="file_selected" from="popups/save_dialog" to="." method="_on_save_dialog_file_selected"]
+[connection signal="visibility_changed" from="popups/save_dialog" to="." method="_on_save_dialog_visibility_changed"]
+[connection signal="file_selected" from="popups/export_dialog" to="." method="_on_export_dialog_file_selected"]
+[connection signal="visibility_changed" from="popups/export_dialog" to="." method="_on_export_dialog_visibility_changed"]
